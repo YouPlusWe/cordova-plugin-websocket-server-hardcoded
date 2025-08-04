@@ -101,7 +101,7 @@ public class WebSocketServerPlugin extends CordovaPlugin {
                 return false;
             }
 
-            final int addr = args.optString(0);
+            final String addr = args.optString(0);
             final int port = args.optInt(1);
 
             List<String> _origins = null;
