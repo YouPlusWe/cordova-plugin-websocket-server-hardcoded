@@ -20,6 +20,8 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.extensions.IExtension;
 import org.java_websocket.protocols.IProtocol;
 import org.java_websocket.protocols.Protocol;
+import java.net.InetAddress;
+import java.net.UnkownHostExceptiin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,28 +101,29 @@ public class WebSocketServerPlugin extends CordovaPlugin {
                 return false;
             }
 
-            final int port = args.optInt(0);
+            final int addr = args.optString(0);
+            final int port = args.optInt(1);
 
             List<String> _origins = null;
             List<String> _protocols = null;
             Boolean _tcpNoDelay = null;
 
             try {
-                _origins = jsonArrayToArrayList(args.optJSONArray(1));
+                _origins = jsonArrayToArrayList(args.optJSONArray(2));
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage(), e);
                 callbackContext.error("Origins option error");
                 return false;
             }
             try {
-                _protocols = jsonArrayToArrayList(args.optJSONArray(2));
+                _protocols = jsonArrayToArrayList(args.optJSONArray(3));
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage(), e);
                 callbackContext.error("Protocols option error");
                 return false;
             }
-            if (!args.isNull(3)) {
-                _tcpNoDelay = Boolean.valueOf(args.optBoolean(3));
+            if (!args.isNull(4)) {
+                _tcpNoDelay = Boolean.valueOf(args.optBoolean(4));
             }
 
             final List<String> origins = _origins;
@@ -131,15 +134,25 @@ public class WebSocketServerPlugin extends CordovaPlugin {
                 @Override
                 public void run() {
                     WebSocketServerImpl newServer = null;
+                    InetAddress addrObj = null;
+                    
+                    try{
+                        addrObj = InetAddress.getByName(addr);
+                    } catch(UnknownHostException e){
+                        Log.e(TAG, e.getMessage(), e);
+                        callbackContext.error("Address error");
+                        return;
+                    }
+                    
                     try {
                         if (protocols != null) {
                             ArrayList<Draft_6455> drafts = new ArrayList<Draft_6455>();
                             for (String protocol : protocols) {
                                 drafts.add(new Draft_6455(Collections.<IExtension> emptyList(), Collections.<IProtocol> singletonList(new Protocol(protocol))));
                             }
-                            newServer = new WebSocketServerImpl(port, (List) drafts);
+                            newServer = new WebSocketServerImpl(addrObj, port, (List) drafts);
                         } else {
-                            newServer = new WebSocketServerImpl(port);
+                            newServer = new WebSocketServerImpl(addrObj, port);
                         }
                         newServer.setCallbackContext(callbackContext);
                     } catch (IllegalArgumentException e) {
