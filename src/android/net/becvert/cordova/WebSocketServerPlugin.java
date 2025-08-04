@@ -104,11 +104,8 @@ public class WebSocketServerPlugin extends CordovaPlugin {
             final String addr = args.optString(0);
             final int port = args.optInt(1);
 
-
-            JSONObject status = new JSONObject();
-            status.put("addr", addr);
-            status.put("port", port);
-            callbackContext.success(status);
+            callbackContext.error("Addr: " + args.optString(0));
+            callbackContext.error("Addr: " + args.optString(1));
 
             List<String> _origins = null;
             List<String> _protocols = null;
