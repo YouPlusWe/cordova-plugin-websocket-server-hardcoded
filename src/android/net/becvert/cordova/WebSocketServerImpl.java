@@ -44,11 +44,11 @@ public class WebSocketServerImpl extends WebSocketServer {
     private Map<WebSocket, String> socketsUUID = new HashMap<WebSocket, String>();
 
     public WebSocketServerImpl(int port) {
-        super(new InetSocketAddress(port));
+        super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port));
     }
 
     public WebSocketServerImpl(int port, List<Draft> drafts) {
-        super(new InetSocketAddress(port), drafts);
+        super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port), drafts);
     }
 
     public CallbackContext getCallbackContext() {
