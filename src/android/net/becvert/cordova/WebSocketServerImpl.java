@@ -44,22 +44,12 @@ public class WebSocketServerImpl extends WebSocketServer {
 
     private Map<WebSocket, String> socketsUUID = new HashMap<WebSocket, String>();
 
-    public WebSocketServerImpl(int port) {
-        
-        try{
-            super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port));
-        } catch(UnknownHostException e){
-             e.printStrackTrace();
-        }
+    public WebSocketServerImpl(InetAddress addr, int port) {
+        super(new InetSocketAddress(addr, port));
     }
 
-    public WebSocketServerImpl(int port, List<Draft> drafts) {
-        
-        try{
-            super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port), drafts);
-        } catch(UnknownHostException e){
-             e.printStrackTrace();
-        }
+    public WebSocketServerImpl(InetAddress addr, int port, List<Draft> drafts) {
+        super(new InetSocketAddress(addr, port), drafts);
     }
 
     public CallbackContext getCallbackContext() {
