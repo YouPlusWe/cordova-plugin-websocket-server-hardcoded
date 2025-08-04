@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnkownHostExceptiin;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,11 +45,21 @@ public class WebSocketServerImpl extends WebSocketServer {
     private Map<WebSocket, String> socketsUUID = new HashMap<WebSocket, String>();
 
     public WebSocketServerImpl(int port) {
-        super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port));
+        
+        try{
+            super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port));
+        } catch(UnknownHostException e){
+             e.printStrackTrace();
+        }
     }
 
     public WebSocketServerImpl(int port, List<Draft> drafts) {
-        super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port), drafts);
+        
+        try{
+            super(new InetSocketAddress(InetAddress.getByName("192.168.1.2"), port), drafts);
+        } catch(UnknownHostException e){
+             e.printStrackTrace();
+        }
     }
 
     public CallbackContext getCallbackContext() {
