@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnkownHostExceptiin;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
