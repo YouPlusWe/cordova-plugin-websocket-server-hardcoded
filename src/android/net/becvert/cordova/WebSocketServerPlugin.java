@@ -104,11 +104,6 @@ public class WebSocketServerPlugin extends CordovaPlugin {
             final String addr = args.optString(0);
             final int port = args.optInt(1);
 
-
-            callbackContext.error("Start params");
-            callbackContext.error("Addr: " + args.optString(0));
-            callbackContext.error("Port: " + args.optString(1));
-
             List<String> _origins = null;
             List<String> _protocols = null;
             Boolean _tcpNoDelay = null;
@@ -135,22 +130,17 @@ public class WebSocketServerPlugin extends CordovaPlugin {
             final List<String> protocols = _protocols;
             final Boolean tcpNoDelay = _tcpNoDelay;
 
-            callbackContext.error("Starting");
-            
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
                     WebSocketServerImpl newServer = null;
                     InetAddress addrObj = null;
                     
-                    callbackContext.error("Inside");
-                    
                     try{
                         addrObj = InetAddress.getByName(addr);
                     } catch(UnknownHostException e){
                         Log.e(TAG, e.getMessage(), e);
-                        callbackContext.error("Address error: ");
-                        callbackContext.error(e.getMessage());
+                        callbackContext.error("Address error: " + e.getMessage());
                         return;
                     }
                     
