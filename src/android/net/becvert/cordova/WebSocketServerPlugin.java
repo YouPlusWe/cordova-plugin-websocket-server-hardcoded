@@ -141,6 +141,7 @@ public class WebSocketServerPlugin extends CordovaPlugin {
                     } catch(UnknownHostException e){
                         Log.e(TAG, e.getMessage(), e);
                         callbackContext.error("Address error");
+                        callbackContext.error(e.getMessage());
                         return;
                     }
                     
