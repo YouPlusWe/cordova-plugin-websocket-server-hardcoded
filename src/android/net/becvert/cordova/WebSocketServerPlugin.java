@@ -21,7 +21,7 @@ import org.java_websocket.extensions.IExtension;
 import org.java_websocket.protocols.IProtocol;
 import org.java_websocket.protocols.Protocol;
 import java.net.InetAddress;
-import java.net.UnkownHostExceptiin;
+import java.net.UnknownHostException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
